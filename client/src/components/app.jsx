@@ -7,8 +7,16 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                Hello World
-            </div>
+                <div id="message-conntainer" style={{ height: "500px", width: "200px", border: "1px solid grey", "borderRadius": "10px" }}>
+                    Messages should be rendered here!!
+                </div>
+                <form id="message-form">
+                    <input type="text" />
+                    <input type="submit" />
+                </form>
+
+
+            </div >
         )
     }
 }
