@@ -14,8 +14,6 @@ class App extends React.Component {
                     <input type="text" />
                     <input type="submit" />
                 </form>
-
-
             </div >
         )
     }
