@@ -4,8 +4,10 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000
+var mongoose = require('mongoose');
 
-io.on('connection', () => { console.log('a user is connected') })
+
+io.on('connection', (socket) => { console.log('a user is connected', socket.id) })
 // io.on("disconnect ", () => { console.log("Client disconnected") });
 
 app.use(bodyParser.json());
@@ -21,6 +23,7 @@ app.post('/message', (req, res) => {
     io.emit('message', req.body.message)
     res.sendStatus(200)
 })
+mongoose.connect('mongodb://localhost/chatter-app')
 
 var server = http.listen(port, () => {
     console.log('server is running on port', server.address().port);
