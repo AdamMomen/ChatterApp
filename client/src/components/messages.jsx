@@ -44,6 +44,9 @@ class Messages extends React.Component {
         })
 
     }
+    setError(error) {
+        this.setState({ error })
+    }
     handleSubmit() {
         console.log(this.state.message)
         if (this.state.message) {

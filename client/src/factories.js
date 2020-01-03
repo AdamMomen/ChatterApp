@@ -28,3 +28,8 @@ const createChat = ({ messages = [], name = "Community", users = [] } = {}) => {
 const getTime = (data) => {
     return `${date.getHours()}:${"0" + date.getMinutes().slice(-2)}`
 }
+exports = {
+    createUser,
+    createMessage,
+    createChat
+}
