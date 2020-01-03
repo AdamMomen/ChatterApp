@@ -1,8 +1,16 @@
 import React from "react"
 import ReactDOM from 'react-dom'
+var io = require('socket.io-client')
 class App extends React.Component {
     constructor(props) {
         super(props);
+    }
+    componentDidMount() {
+        var socket = io();
+        socket.on('message', function (data) {
+            //set the state though
+            console.log(data);
+        })
     }
     render() {
         return (

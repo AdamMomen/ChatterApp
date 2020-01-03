@@ -3,15 +3,16 @@ var bodyParser = require('body-parser')
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var port = process.env.PORT || 3000
 
 io.on('connection', () => {
     console.log('a user is connected')
 })
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('client/dist'))
 
-var port = process.env.PORT || 3000
 
 app.get('/messages', (req, res) => {
     console.log(req.method)
