@@ -1,7 +1,8 @@
 import React from "react"
 import ReactDOM from 'react-dom'
 import Messages from './messages.jsx'
-
+import { json } from "body-parser";
+var $ = require('jquery');
 var io = require('socket.io-client')
 class App extends React.Component {
     constructor(props) {
@@ -38,16 +39,11 @@ class App extends React.Component {
             var message = {
                 message: this.state.message
             }
-
-            fetch('http://localhost:3000/message', {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(message)
-            }).then(console.log(`Sent successfully!`))
+            $.post('http://localhost:3000/message', JSON.stringify(message))
+            this.setState({
+                message: ''
+            })
         }
-        this.setState({
-            message: ''
-        })
     }
     render() {
         return (

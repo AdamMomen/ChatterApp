@@ -6,7 +6,7 @@ var io = require('socket.io')(http);
 var port = process.env.PORT || 3000
 
 io.on('connection', () => { console.log('a user is connected') })
-io.on("disconnect ", () => { console.log("Client disconnected") });
+// io.on("disconnect ", () => { console.log("Client disconnected") });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,7 +15,7 @@ app.use(express.static('client/dist'))
 
 app.get('/messages', (req, res) => {
     console.log(req.method)
-    res.json({ success: true })
+    res.json({ success: true }).sendStatus(200)
 })
 app.post('/message', (req, res) => {
     io.emit('message', req.body.message)
