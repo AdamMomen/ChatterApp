@@ -5,9 +5,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000
 
-io.on('connection', () => {
-    console.log('a user is connected')
-})
+io.on('connection', () => { console.log('a user is connected') })
+io.on("disconnect", () => console.log("Client disconnected"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

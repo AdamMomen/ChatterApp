@@ -12,15 +12,15 @@ class App extends React.Component {
             messages: null,
         }
     }
-    componentWillUpdate() {
+    componentDidMount() {
         // var socket = io();
-        socket.on('message', (data) => {
-            //set the state though
-            this.setState({
-                messages: data
-            });
-        })
-        console.log('from socket', this.state.messages)
+        // socket.on('message', (data) => {
+        //     //set the state though
+        //     this.setState({
+        //         messages: data
+        //     });
+        // })
+        // console.log('from socket', this.state.messages)
     }
 
     onChange(e) {
