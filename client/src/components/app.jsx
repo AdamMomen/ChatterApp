@@ -1,5 +1,7 @@
 import React from "react"
 import ReactDOM from 'react-dom'
+import Messages from './messages.jsx'
+
 var io = require('socket.io-client')
 class App extends React.Component {
     constructor(props) {
@@ -53,11 +55,10 @@ class App extends React.Component {
                 <div id="message-conntainer" style={{ height: "500px", width: "200px", border: "1px solid grey", "borderRadius": "10px" }}>
                     Messages should be rendered here!!
                 </div>
-                {/* <form id="message-form" onSubmit={this.handleClick}> */}
                 <input type="text" onChange={this.onChange} value={this.state.message}></input>
                 <button onClick={this.handleSubmit}>Submit</button>
-                {/* </form> */}
             </div >
+            // <Messages
         )
     }
 }
