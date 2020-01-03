@@ -1,6 +1,7 @@
 import React, { useRef } from "react"
 import ReactDOM from 'react-dom'
-import { USER_CONNECTED } from '../events'
+import { USER_CONNECTED, LOGOUT } from '../events'
+import Login from './login.jsx'
 
 // import { useEffect, useRef } from "react"
 // import io from 'socket.io-client'
@@ -61,7 +62,8 @@ class Messages extends React.Component {
         })
     }
     render() {
-
+        const { socket } = this.state
+        const { title } = this.props
         return (
             <div> <div>
                 <div id="message-conntainer" style={{ height: "500px", width: "200px", border: "1px solid grey", "borderRadius": "10px" }}>
@@ -69,7 +71,9 @@ class Messages extends React.Component {
             </div>
                 <input type="text" onChange={this.onChange} value={this.state.message}></input>
                 <button onClick={this.handleSubmit}>Submit</button>
+
             </div >
+                <Login socket={socket} setUser={this.setUser} />
             </div>
         )
     }
