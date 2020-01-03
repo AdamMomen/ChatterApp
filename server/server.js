@@ -5,9 +5,10 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000
 var mongoose = require('mongoose');
+var SocketManger = require('./socketManger');
+io.on('connection', SocketManger)
+//(socket) => { console.log('a user is connected', socket.id) }
 
-
-io.on('connection', (socket) => { console.log('a user is connected', socket.id) })
 // io.on("disconnect ", () => { console.log("Client disconnected") });
 
 app.use(bodyParser.json());

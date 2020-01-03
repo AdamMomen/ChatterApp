@@ -19,6 +19,9 @@ class Messages extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onChange = this.onChange.bind(this)
+        this.setUser = this.setUser.bind(this)
+        this.logout = this.setUser.bind(this)
+        this.setError = this.setUser.bind(this)
     }
 
     componentDidMount() {

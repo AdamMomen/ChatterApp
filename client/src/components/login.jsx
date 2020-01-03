@@ -8,14 +8,16 @@ class Login extends React.Component {
             error: ""
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.setUser = this.setUser.bind(this)
     }
     handleChange(e) {
         this.setState({
             nickname: e.target.value
         })
+        e.target.value = ''
     }
-    handleSubmit(e) {
-        e.preventDeafault();
+    handleSubmit() {
         const { socket } = this.props
         const { nickname } = this.state
         socket.emit(VERIFY_USER, nickname, this.setUser)
@@ -35,23 +37,21 @@ class Login extends React.Component {
         return (
             <div className="login">
                 <label htmlFor="nickname"><h2>Got a nickname</h2></label>
-                <form>
-                    <input
-                        ref={(input) => {
-                            this.textInput = input
-                        }}
-                        type="text"
-                        id="nickname"
-                        value={nickname}
-                        onChange={this.handleChange}
-                        placeholder={'World Leader'}
-                    />
-                    <input
-                        type="submit"
-
-                    />
-                    <div className="error">{error ? error : null}</div>
-                </form></div>
+                {/* <form onSubmit={this.handleSubmit} className="login-form"> */}
+                <input
+                    ref={(input) => {
+                        this.textInput = input
+                    }}
+                    type="text"
+                    id="nickname"
+                    value={nickname}
+                    onChange={this.handleChange}
+                    placeholder={'World Leader'}
+                />
+                <button onClick={this.handleSubmit}>Submit</button>
+                <div className="error">{error ? error : null}</div>
+                {/* </form> */}
+            </div>
         )
     }
 }
