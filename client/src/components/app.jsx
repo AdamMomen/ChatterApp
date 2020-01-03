@@ -1,11 +1,11 @@
 class App extends React.Component {
     constructor(props) {
+        super(props);
     }
     render() {
         return (
             <div>
-                Hello from REACTs
-                </div>
+            </div>
         )
     }
 }
