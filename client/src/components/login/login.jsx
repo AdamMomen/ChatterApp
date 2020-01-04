@@ -10,6 +10,7 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.setUser = this.setUser.bind(this)
+        this.setError = this.setError.bind(this)
     }
     handleChange(e) {
         this.setState({
@@ -30,6 +31,9 @@ class Login extends React.Component {
         } else {
             this.props.setUser(user)
         }
+    }
+    setError(error) {
+        this.setState({ error })
     }
 
     render() {

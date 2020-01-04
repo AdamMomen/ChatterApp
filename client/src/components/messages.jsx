@@ -20,7 +20,6 @@ class Messages extends React.Component {
         this.onChange = this.onChange.bind(this)
         this.setUser = this.setUser.bind(this)
         this.logout = this.setUser.bind(this)
-        this.setError = this.setUser.bind(this)
     }
 
     componentDidMount() {
@@ -28,7 +27,6 @@ class Messages extends React.Component {
             console.log('connected!')
         })
         this.setState({ socket: socket })
-        console.log(socket)
     }
     setUser(user) {
 
@@ -49,9 +47,7 @@ class Messages extends React.Component {
         })
 
     }
-    setError(error) {
-        this.setState({ error })
-    }
+
     handleSubmit() {
         console.log(this.state.message)
         if (this.state.message) {
@@ -77,7 +73,7 @@ class Messages extends React.Component {
                 <div id="message-conntainer">
                     {
                         !user ?
-                            <Login socket={socket} setUser={this.setUser} />
+                            <Login socket={socket} setUser={this.setUser} setError={this.setError} />
                             :
                             <ChatContainer socket={socket} user={user} logout={this.logout} />
                     }
