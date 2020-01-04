@@ -8,6 +8,7 @@ class Message extends React.Component {
         return (
             <div ref="container" className="thread-container">
                 <div className="thread">
+                    <div>HELLO Iam here</div>
                     {
                         messages.map((mes) => {
                             return (

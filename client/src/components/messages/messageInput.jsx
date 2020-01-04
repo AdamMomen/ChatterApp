@@ -14,18 +14,14 @@ class MessageInput extends React.Component {
         // this.scrollDown = this.scrollDown.bind(this)
         this.sendTyping = this.sendTyping.bind(this)
     }
-    componentDidMount() {
-        // this.scrollDown()
-    }
-    componentDidUpdate() {
-        // this.scrollDown()
-    }
+
     componentWillUnmount() {
         this.sendTyping();
     }
     //causes bugs!
     // scrollDown() {
     //     const { container } = this.refs
+    //     console.log(container)
     //     container.scrollTop = container.scrollHeight
     // }
     handleSubmit() {
@@ -84,7 +80,6 @@ class MessageInput extends React.Component {
                         disabled={message.length < 1}
                         onClick={this.handleSubmit}
                         className="send"
-
                     > Send </button>
                 </div>
             </div>
