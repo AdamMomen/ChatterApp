@@ -106,7 +106,7 @@ class ChatContainer extends React.Component {
                         <div className="chat-room">
                             <ChatHeading name={activeChat.name} />
                             <Message
-                                message={activeChat.message}
+                                messages={activeChat.messages}
                                 user={user}
                                 typingUsers={activeChat.typingUsers} />
                             <MessageInput
