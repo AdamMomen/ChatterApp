@@ -1,10 +1,9 @@
 import React, { useRef } from "react"
 import ReactDOM from 'react-dom'
 import { USER_CONNECTED, LOGOUT } from '../events'
-import Login from './login.jsx';
-import ChatContainer from './chatContainer.jsx';
-// import { useEffect, useRef } from "react"
-// import io from 'socket.io-client'
+import Login from './login/login.jsx';
+import ChatContainer from './chat/chatContainer.jsx';
+
 var io = require('socket.io-client')
 var socketURL = 'http://localhost:3000'
 

@@ -6,9 +6,6 @@ var io = require('socket.io-client')
 class App extends React.Component {
     constructor(props) {
         super(props);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.onChange = this.onChange.bind(this);
-
         this.state = {
             message: '',
             messages: null,
