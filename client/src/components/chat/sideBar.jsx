@@ -1,6 +1,8 @@
 import React from "react"
-import { FAChevronDown, IoIosMenu, FaSearch } from 'react-icons/all'
+import { FAChevronDown, IoIosMenu, FaSearch } from 'react-icons/fa'
 import MdEject from 'react-icons/md'
+import IoIosSearch from 'react-icons/fa'
+
 class SideBar extends React.Component {
     constructor(props) {
         super(props);
@@ -15,6 +17,11 @@ class SideBar extends React.Component {
             <div className="menu" >
                 <IoIosMenu />
             </div>
+            <div className="search">
+                <i className="search-icon"><IoIosSearch /></i>
+                <input placeholder="Search" type="text" />
+                <div className="plus"></div>
+            </div>
             <div
                 className="users"
                 ref='users'
@@ -22,11 +29,12 @@ class SideBar extends React.Component {
                 {
                     chats.map((chat) => {
                         if (chat.name) {
-                            const lastMessage = chat.message[chat.message.length - 1]
-                            const user = chat.user.find(({ name }) => {
+                            const lastMessage = chat.messages[chat.messages.length - 1]
+                            const user = chat.users.find(({ name }) => {
                                 return name !== this.props.name
                             }) || { name: "Community" }
                             const classNames = (activeChat && activeChat.id === chat.id) ? 'active' : ''
+
                             return (
                                 <div
                                     key={chat.id}
@@ -36,7 +44,7 @@ class SideBar extends React.Component {
                                     <div className="user-photo">{user.name[0].toUpperCase()}</div>
                                     <div className="user-info">
                                         <div className="name"> {user.name} </div>
-                                        {lastMessage && <div className="last-messaege">{lastMessage.message}</div>}
+                                        {lastMessage && <div className="last-message">{lastMessage.message}</div>}
                                     </div>
                                 </div>
                             )
@@ -47,7 +55,7 @@ class SideBar extends React.Component {
             </div>
             <div className="current-user">
                 <span>{user.name}</span>
-                <div onClick={() => { logout() }} className="logout"></div>
+                <div onClick={() => { logout() }} className="logout">LOGOUT</div>
             </div>
         </div>
         )

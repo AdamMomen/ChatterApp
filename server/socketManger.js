@@ -4,6 +4,7 @@ const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
     TYPING } = require('../client/src/events')
 const { createUser, createMessage, createChat } = require('../client/src/factories')
 var connectedUsers = {};
+let communityChat = createChat()
 module.exports = (socket) => {
     console.log(`a user is connected  socket id : ${socket.id}`)
 
@@ -33,6 +34,15 @@ module.exports = (socket) => {
         }
         io.emit(USER_DISCONNECTED, connectedUsers)
         console.log('disconnect!', connectedUsers)
+    })
+    socket.on(LOGOUT, () => {
+        connectedUsers = removeUser(connectedUsers, socket.user.name)
+        io.emit(USER_DISCONNECTED, connectedUsers)
+        console.log('disconnect!', connectedUsers)
+    })
+
+    socket.on(COMMUNITY_CHAT, (callback) => {
+        callback(communityChat)
     })
     //add user 
     function addUser(userList, user) {

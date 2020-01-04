@@ -6,10 +6,7 @@ class Message extends React.Component {
     render() {
         const { messages, user, typingUsers } = this.props
         return (
-            <div
-                ref="container"
-                className="thread-container"
-            >
+            <div ref="container" className="thread-container">
                 <div className="thread">
                     {
                         messages.map((mes) => {
@@ -27,15 +24,16 @@ class Message extends React.Component {
                     }
                     {
                         typingUsers.map(name => {
-                            return <div
+                            return (<div
                                 key={name}
-                                className="typing-user">
-                                {`${name} is typing . . .`}
-                            </div>
+                                className="typing-user"
+                            >{`${name} is typing . . .`}</div>)
                         })
                     }
                 </div>
-                )
-            }
+            </div>
+        )
+    }
 }
-        export default Message
+
+export default Message
