@@ -10,23 +10,25 @@ class MessageInput extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.sendMessage = this.sendMessage.bind(this)
         this.stopCheckingTyping = this.stopCheckingTyping.bind(this)
-        this.container.scroll = this.container.scroll.bind(this)
+        this.startCheckingTyping = this.startCheckingTyping.bind(this)
+        // this.scrollDown = this.scrollDown.bind(this)
+        this.sendTyping = this.sendTyping.bind(this)
     }
     componentDidMount() {
-        this.scrollDown()
+        // this.scrollDown()
     }
     componentDidUpdate() {
-        this.scrollDown()
+        // this.scrollDown()
     }
     componentWillUnmount() {
         this.sendTyping();
     }
-    scrollDown() {
-        const { container } = this.refs
-        container.scrollTop = container.scrollHeight
-    }
+    //causes bugs!
+    // scrollDown() {
+    //     const { container } = this.refs
+    //     container.scrollTop = container.scrollHeight
+    // }
     handleSubmit() {
-        // e.preventDefault()
         this.sendMessage()
         this.setState({ message: "" })
     }
@@ -62,8 +64,8 @@ class MessageInput extends React.Component {
         return (
             <div className="message-input">
 
-                <div className="message-form">>
-                <input
+                <div className="message-form">
+                    <input
                         id="message"
                         ref={"messageinput"}
                         type="text"

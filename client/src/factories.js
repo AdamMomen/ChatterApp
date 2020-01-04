@@ -12,7 +12,7 @@ const createUser = ({ name = "" } = {}) =>
 const createMessage = ({ message = "", sender = "" } = {}) => (
     {
         id: uuidv4(),
-        time: new Date(Data.now()),
+        time: new Date(Date.now()),
         message,
         sender
     }

@@ -47,9 +47,9 @@ class ChatContainer extends React.Component {
     addMessageToChat(chatId) {
         return message => {
             const { chats } = this.state
-            let newChats = chat.map((chat) => {
+            let newChats = chats.map((chat) => {
                 if (chat.id === chatId) {
-                    chat.message.push(message)
+                    chat.messages.push(message)
                     return chat
                 }
                 this.setState({ chats: newChats })
@@ -83,7 +83,7 @@ class ChatContainer extends React.Component {
         socket.emit(MESSAGE_SENT, { chatId, message })
     }
 
-    sendTyping() {
+    sendTyping(chatId, isTyping) {
         const { socket } = this.props
         socket.emit(TYPING, { chatId, isTyping })
     }
@@ -111,7 +111,7 @@ class ChatContainer extends React.Component {
                                 typingUsers={activeChat.typingUsers} />
                             <MessageInput
                                 sendMessage={(message) => { this.sendMessage(activeChat.id, message) }}
-                                sendTyping={(typing) => { this.sendTyping(activeChat.id, isTyping) }}
+                                sendTyping={(isTyping) => { this.sendTyping(activeChat.id, isTyping) }}
                             />
                         </div>
                     ) :
