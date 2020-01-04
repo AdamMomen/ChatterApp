@@ -14,6 +14,7 @@ class ChatContainer extends React.Component {
     }
     render() {
         const { user, logout } = this.props
+        const { chats, activeChat } = this.state
         return (<div className="container">
             <sideBar
                 logout={logout}
@@ -22,7 +23,7 @@ class ChatContainer extends React.Component {
                 activeChat={activeChat}
                 setActiveChat={this.setActiveChat}
 
-            ></sideBar>
+            />
         </div>)
     }
 }

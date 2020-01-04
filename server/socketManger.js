@@ -1,5 +1,4 @@
 const io = require('./server').io
-console.log
 const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
     LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
     TYPING } = require('../client/src/events')
