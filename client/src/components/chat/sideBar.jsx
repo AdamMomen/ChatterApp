@@ -12,7 +12,7 @@ class SideBar extends React.Component {
         return (<div id="side-bar">
             <div className="heading"></div>
             <div className="chatter-app">Chatter-APP</div>
-            <div className="menu">
+            <div className="menu" >
                 <IoIosMenu />
             </div>
             <div

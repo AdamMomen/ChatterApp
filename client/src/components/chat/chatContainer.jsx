@@ -1,6 +1,10 @@
-import React from "react"
-import SideBar from './sideBar.jsx'
+import React from "react";
+import SideBar from './sideBar.jsx';
 import Messages from "../messages.jsx";
+import MessageInput from "../messages/MessageInput.jsx";
+import ChatHeading from "./ChatHeading.jsx";
+
+const { COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT, TYPING } = require('../../events')
 class ChatContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -12,6 +16,9 @@ class ChatContainer extends React.Component {
         this.sendMessage = this.sendMessage.bind(this)
         this.sendTyping = this.sendTyping.bind(this)
         this.resetChat = this.resetChat.bind(this)
+        this.addChat = this.addChat.bind(this)
+        this.addMessageToChat = this.addMessageToChat.bind(this)
+        //complete the binding
     }
     componentDidMount() {
         const { socket } = this.props
@@ -26,26 +33,43 @@ class ChatContainer extends React.Component {
         const newChat = reset ? [chat] : [...chats, chat]
         this.setState({ chats: newChat })
         //check the spelling
-        const messageEvent = `${MESSAGE_RECIEVED}-${chat - id -}`
-        const typingEvent = `${TYPING}-${chat - id -}`
+        const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`
+        const typingEvent = `${TYPING}-${chat.id}`
 
-        socket.on(typingEvent)
-        socket.on(messageEvent)
+        socket.on(messageEvent, this.addMessageToChat(chatId))
+        socket.on(typingEvent, this.updateTypingInChat(chatId))
 
     }
     setActiveChat(activeChat) {
         this.setState({ activeChat })
     }
-    addMessage
+    addMessageToChat(chatId) {
+        return message => {
+            const { chats } = this.state
+            let newChats = chat.map((chat) => {
+                if (chat.id === chatId) {
+                    chat.message.push(message)
+                    return chat
+                }
+                this.setState({ chats: newChats })
+            })
+        }
+    }
+
+    updateTypingInChat(chatId) {
+
+    }
+
     sendMessage(chatId, message) {
         const { socket } = this.props
         socket.emit(MESSAGE_SENT, { chatId, message })
     }
+
     sendTyping() {
         const { socket } = this.props
         socket.emit(TYPING, { chatId, isTyping })
-
     }
+
     render() {
         const { user, logout } = this.props
         const { chats, activeChat } = this.state
@@ -71,7 +95,10 @@ class ChatContainer extends React.Component {
                                 sendTyping={(typing) => { this.sendTyping(activeChat.id, isTyping) }}
                             />
                         </div>
-                    )
+                    ) :
+                        <div className="chat-room choose">
+                            <h3>Choose a chat!</h3>
+                        </div>
                 }
             </div>
         </div>)

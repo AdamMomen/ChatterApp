@@ -27,7 +27,13 @@ module.exports = (socket) => {
         io.emit(USER_CONNECTED, connectedUsers)
         console.log('connected Users = ', connectedUsers)
     })
-
+    socket.on('disconnect', () => {
+        if ("user" in socket) {
+            connectedUsers = removeUser(connectedUsers, socket.user.name)
+        }
+        io.emit(USER_DISCONNECTED, connectedUsers)
+        console.log('disconnect!', connectedUsers)
+    })
     //add user 
     function addUser(userList, user) {
         var newList = Object.assign({}, userList)
