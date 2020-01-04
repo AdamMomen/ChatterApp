@@ -22,6 +22,7 @@ class Message extends React.Component {
                             )
                         })
                     }
+
                     {
                         typingUsers.map(name => {
                             return (<div

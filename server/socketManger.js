@@ -7,7 +7,8 @@ var connectedUsers = {};
 let communityChat = createChat()
 module.exports = (socket) => {
     console.log(`a user is connected  socket id : ${socket.id}`)
-
+    let sendMessageToChatFromUser;
+    let sendTypingFromUser;
     //verify user 
     socket.on(VERIFY_USER, (nickname, callback) => {
 
@@ -24,7 +25,8 @@ module.exports = (socket) => {
         console.log(user)
         connectedUsers = addUser(connectedUsers, user)
         socket.user = user;
-        console.log('io', io)
+        sendMessageToChatFromUser = sendMessageToChat(user.name)
+        sendTypingFromUser = sendTypingToChat(user.name)
         io.emit(USER_CONNECTED, connectedUsers)
         console.log('connected Users = ', connectedUsers)
     })
@@ -63,5 +65,22 @@ module.exports = (socket) => {
     //check user 
     function isUser(userList, username) {
         return username in userList;
+    }
+    function sendMessageToChat(sender) {
+        return (chatId, message) => {
+            io.emit(`${MESSAGE_RECIEVED}-${chatId}`, createMessage({ message, sender }))
+
+        }
+    }
+    socket.on(MESSAGE_SENT, ({ chatId, message }) => {
+        sendMessageToChatFromUser(chatId, message)
+    })
+    socket.on(TYPING, ({ chatId, isTyping }) => {
+        sendTypingToChat(chatId, isTyping)
+    })
+    function sendTypingToChat(user) {
+        return (chatId, isTyping) => {
+            io.emit(`${TYPING}-${chatId}`, { chatId, isTyping })
+        }
     }
 }

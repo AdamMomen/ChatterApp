@@ -27,8 +27,9 @@ class Login extends React.Component {
     setUser({ user, isUser }) {
         console.log(user, isUser)
         if (isUser) {
-            this.setError("")
+            this.setError("User name taken")
         } else {
+            this.setError("")
             this.props.setUser(user)
         }
     }

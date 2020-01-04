@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from './sideBar.jsx';
-import Messages from "../messages.jsx";
+import Message from "../messages/message.jsx";
 import MessageInput from "../messages/MessageInput.jsx";
 import ChatHeading from "./ChatHeading.jsx";
 
@@ -28,16 +28,17 @@ class ChatContainer extends React.Component {
         return this.addChat(chat, true)
     }
     addChat(chat, reset) {
+        console.log(chat)
         const { socket } = this.props
         const { chats } = this.state
         const newChat = reset ? [chat] : [...chats, chat]
-        this.setState({ chats: newChat })
+        this.setState({ chats: newChat, activeChat: reset ? chat : this.stateactiveChat })
         //check the spelling
         const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`
         const typingEvent = `${TYPING}-${chat.id}`
 
-        socket.on(messageEvent, this.addMessageToChat(chatId))
-        socket.on(typingEvent, this.updateTypingInChat(chatId))
+        socket.on(messageEvent, this.addMessageToChat(chat.id))
+        socket.on(typingEvent, this.updateTypingInChat(chat.id))
 
     }
     setActiveChat(activeChat) {
@@ -57,7 +58,24 @@ class ChatContainer extends React.Component {
     }
 
     updateTypingInChat(chatId) {
-
+        return ({ isTyping, chatId }) => {
+            if (user !== this.props.user.name) {
+                const { chats } = this.state
+                let newChats = chats.map((chat) => {
+                    if (chat.id === chatId) {
+                        if (isTyping && !chats.typingUsers.includes(user)) {
+                            chat.typingUsers.push(user)
+                        } else if (!isTyping && chat.typingUsers.includes(user)) {
+                            chat.typingUsers = chat.typingUsers.filter(us => us !== user)
+                        }
+                    }
+                    return chat
+                })
+                this.setState({
+                    chats: newChats
+                })
+            }
+        }
     }
 
     sendMessage(chatId, message) {
@@ -83,9 +101,10 @@ class ChatContainer extends React.Component {
             />
             <div className="chat-room-container">
                 {
+
                     activeChat !== null ? (
                         <div className="chat-room">
-                            <chatHeading name={activeChat.name} />
+                            <ChatHeading name={activeChat.name} />
                             <Message
                                 message={activeChat.message}
                                 user={user}
