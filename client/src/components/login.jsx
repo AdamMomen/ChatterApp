@@ -28,7 +28,7 @@ class Login extends React.Component {
         if (isUser) {
             this.setError("")
         } else {
-            this.props.setUser()
+            this.props.setUser(user)
         }
     }
 
@@ -37,7 +37,6 @@ class Login extends React.Component {
         return (
             <div className="login">
                 <label htmlFor="nickname"><h2>Got a nickname</h2></label>
-                {/* <form onSubmit={this.handleSubmit} className="login-form"> */}
                 <input
                     ref={(input) => {
                         this.textInput = input
@@ -50,7 +49,7 @@ class Login extends React.Component {
                 />
                 <button onClick={this.handleSubmit}>Submit</button>
                 <div className="error">{error ? error : null}</div>
-                {/* </form> */}
+
             </div>
         )
     }

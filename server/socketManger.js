@@ -1,28 +1,39 @@
-const io = require('./server')
-const { VERIFY_USER, USER_CONNECTED, LOGOUT } = require('../client/src/events')
+const io = require('./server').io
+console.log
+const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
+    LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
+    TYPING } = require('../client/src/events')
 const { createUser, createMessage, createChat } = require('../client/src/factories')
-const connectedUser = {}
+var connectedUsers = {};
 module.exports = (socket) => {
     console.log(`a user is connected  socket id : ${socket.id}`)
 
     //verify user 
     socket.on(VERIFY_USER, (nickname, callback) => {
-        if (isUser(connectedUser, nickname)) {
+
+        if (isUser(connectedUsers, nickname)) {
             callback({ isUser: true, user: null })
         } else {
             callback({ isUser: false, user: createUser({ name: nickname }) })
         }
+        console.log()
     })
+
     socket.on(USER_CONNECTED, (user) => {
-        connectedUser = addUser(connectedUser, user)
+        // console.log('connectedUser', connectedUsers)
+        console.log(user)
+        connectedUsers = addUser(connectedUsers, user)
         socket.user = user;
-        console.log('connected Users = ', connectedUser)
+        console.log('io', io)
+        io.emit(USER_CONNECTED, connectedUsers)
+        console.log('connected Users = ', connectedUsers)
     })
 
     //add user 
     function addUser(userList, user) {
-        let newList = Object.assign({}, userList)
-        newList[user.name] = user;
+        var newList = Object.assign({}, userList)
+        var username = user.name;
+        newList[username] = user;
         return newList
 
     }

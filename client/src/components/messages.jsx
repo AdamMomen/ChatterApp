@@ -1,8 +1,8 @@
 import React, { useRef } from "react"
 import ReactDOM from 'react-dom'
 import { USER_CONNECTED, LOGOUT } from '../events'
-import Login from './login.jsx'
-
+import Login from './login.jsx';
+import ChatContainer from './chatContainer.jsx';
 // import { useEffect, useRef } from "react"
 // import io from 'socket.io-client'
 var io = require('socket.io-client')
@@ -28,13 +28,16 @@ class Messages extends React.Component {
         var socket = io().on('connect', () => {
             console.log('connected!')
         })
-        this.setState({ socket })
+        this.setState({ socket: socket })
         console.log(socket)
     }
     setUser(user) {
+
         const { socket } = this.state
+
         socket.emit(USER_CONNECTED, user)
         this.setState({ user })
+        console.log('insoide setState', this.state.user)
     }
     logout() {
         const { socket } = this.state
@@ -68,19 +71,19 @@ class Messages extends React.Component {
         })
     }
     render() {
-        const { socket } = this.state
+        const { socket, user } = this.state
         const { title } = this.props
         return (
-            <div> <div>
-                <div id="message-conntainer" style={{ height: "500px", width: "200px", border: "1px solid grey", "borderRadius": "10px" }}>
-                    Messages should be rendered here!!
-            </div>
-                <input type="text" onChange={this.onChange} value={this.state.message}></input>
-                <button onClick={this.handleSubmit}>Submit</button>
-
+            <div>
+                <div id="message-conntainer">
+                    {
+                        !user ?
+                            <Login socket={socket} setUser={this.setUser} />
+                            :
+                            <ChatContainer socket={socket} user={user} logout={this.logout} />
+                    }
+                </div>
             </div >
-                <Login socket={socket} setUser={this.setUser} />
-            </div>
         )
     }
 }
